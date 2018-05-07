@@ -1,23 +1,28 @@
-﻿using System.Collections.Generic;
-using System.Dynamic;
-using System.Security.Cryptography.X509Certificates;
-using System.Xml;
-
-namespace Cymbalists
+﻿namespace Cymbalists
 {
     public class Node
     {
-
-        public Node(int x, int y)
+        public string RoutingName => _control.RoutingName;
+        public Node(int x, int y, int n = 0, RabbitMQ.Client.IConnection connection = null, string routingName = "")
         {
             X = x;
             Y = y;
-            Neighbours = new List<Node>();
+            _control = new ControlUnit(connection, routingName, n);
         }
 
         public int X { get; }
         public int Y { get; }
-        public List<Node> Neighbours { get; }
 
+        public void AddNeighbour(string name)
+        {
+            _control.AddNeighbour(name);
+        }
+
+        private readonly ControlUnit _control;
+
+        public void ControlMethod()
+        {
+            _control.Control();
+        }
     }
 }

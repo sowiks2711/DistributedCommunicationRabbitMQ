@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.26730.15
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cymbalists", "Cymbalists\Cymbalists.csproj", "{DF3B0242-40ED-411A-998B-FFA7A262B4DA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cymbalists", "Cymbalists\Cymbalists.csproj", "{DF3B0242-40ED-411A-998B-FFA7A262B4DA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CymbalistsTests", "CymbalistsTests\CymbalistsTests.csproj", "{3565C8A1-8C98-4C16-8FAE-77EBBD582B65}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{DF3B0242-40ED-411A-998B-FFA7A262B4DA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DF3B0242-40ED-411A-998B-FFA7A262B4DA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DF3B0242-40ED-411A-998B-FFA7A262B4DA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3565C8A1-8C98-4C16-8FAE-77EBBD582B65}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3565C8A1-8C98-4C16-8FAE-77EBBD582B65}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3565C8A1-8C98-4C16-8FAE-77EBBD582B65}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3565C8A1-8C98-4C16-8FAE-77EBBD582B65}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

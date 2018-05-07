@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
+using System.Net;
 using System.Text;
 using System.Threading;
 using RabbitMQ.Client;
@@ -11,33 +12,33 @@ namespace Cymbalists
 {
     class Program
     {
+        public static readonly string PositionFilePath = "Resources/positions.txt";
+        public static readonly string QueueName = "Queueu";
         public static readonly double HearingDistance = 3;
         public static void Main(string[] args)
         {
-            var nodes = new GraphBuilder(ReadCoordinates()).Build();
+            var factory = new ConnectionFactory(){ HostName = "localhost"};
+            var threads = new List<Thread>();
+            IConnection connection = null;
+            
+                var nodes = new NodesConnector(new NodesFactory(connection).Create() ).Connect();
+                foreach (var node in nodes)
+                {
+                    var thread = new Thread(node.ControlMethod);
+                    thread.Start();
+                    threads.Add(thread);
+                }
+                //var nodes = new NodesConnector(ReadCoordinates(connection) ).Connect();
             
 
+            foreach (var thread in threads)
+                thread.Join();
             //Thread receiver = new Thread(receiverMethod);
             //Thread sender = new Thread(senderMethod);
             //receiver.Start();
             //sender.Start();
         }
 
-        private static List<Node> ReadCoordinates()
-        {
-            var nodes = new List<Node>();
-            using (TextReader reader = File.OpenText("Resources/positions.txt"))
-            {
-                var n = int.Parse(reader.ReadLine());
-                for (var i = 0; i < n; i++)
-                {
-                    var coordinates = reader.ReadLine().Split(' ');
-                    nodes.Add(new Node(int.Parse(coordinates[0]), int.Parse(coordinates[1])));
-                }
-            }
-
-            return nodes;
-        }
 
         private static void SenderMethod()
         {
