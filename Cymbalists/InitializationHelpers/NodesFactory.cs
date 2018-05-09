@@ -2,15 +2,13 @@
 using System.IO;
 using RabbitMQ.Client;
 
-namespace Cymbalists
+namespace Cymbalists.InitializationHelpers
 {
     internal class NodesFactory
     {
-        private readonly IConnection _connection;
 
-        public NodesFactory(IConnection connection)
+        public NodesFactory()
         {
-            this._connection = connection;
         }
 
         public List<Node> Create()
@@ -22,7 +20,7 @@ namespace Cymbalists
                 for (var i = 0; i < n; i++)
                 {
                     var coordinates = reader.ReadLine().Split(' ');
-                    nodes.Add(new Node(int.Parse(coordinates[0]), int.Parse(coordinates[1]), n, _connection, i.ToString()));
+                    nodes.Add(new Node(int.Parse(coordinates[0]), int.Parse(coordinates[1]), n, i.ToString()));
                 }
             }
 

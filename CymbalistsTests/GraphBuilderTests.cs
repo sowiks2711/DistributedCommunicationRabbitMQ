@@ -1,4 +1,5 @@
 using Cymbalists;
+using Cymbalists.InitializationHelpers;
 using Xunit;
 
 namespace CymbalistsTests

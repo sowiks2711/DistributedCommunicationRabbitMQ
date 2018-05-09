@@ -5,6 +5,7 @@ using System.IO;
 using System.Net;
 using System.Text;
 using System.Threading;
+using Cymbalists.InitializationHelpers;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
 
@@ -12,21 +13,25 @@ namespace Cymbalists
 {
     class Program
     {
-        public static readonly string PositionFilePath = "Resources/positions.txt";
-        public static readonly string QueueName = "Queueu";
-        public static readonly double HearingDistance = 3;
+        internal const string HostName = "localhost";
+        internal static readonly string PositionFilePath = "Resources/positions.txt";
+        internal static readonly string QueueName = "Queueu";
+        internal static readonly double HearingDistance = 3;
         public static void Main(string[] args)
         {
-            var factory = new ConnectionFactory(){ HostName = "localhost"};
+            var factory = new ConnectionFactory(){ HostName = HostName };
             var threads = new List<Thread>();
-            IConnection connection = null;
             
-                var nodes = new NodesConnector(new NodesFactory(connection).Create() ).Connect();
+                var nodes = new NodesConnector(new NodesFactory().Create() ).Connect();
                 foreach (var node in nodes)
                 {
-                    var thread = new Thread(node.ControlMethod);
-                    thread.Start();
-                    threads.Add(thread);
+                    var controlUnit = node.CreateControlUnit(factory);
+                    ///
+                    /// TODO: create threads and pass them the appropriate objects method
+                    ///
+                    /// var thread = new Thread(node.ControlMethod);
+                    /// thread.Start();
+                    /// threads.Add(thread);
                 }
                 //var nodes = new NodesConnector(ReadCoordinates(connection) ).Connect();
             
@@ -43,7 +48,7 @@ namespace Cymbalists
         private static void SenderMethod()
         {
             
-            var factory = new ConnectionFactory(){ HostName = "localhost"};
+            var factory = new ConnectionFactory(){ HostName = HostName };
             using (var connection = factory.CreateConnection())
             using (var channel = connection.CreateModel())
             {
@@ -67,7 +72,7 @@ namespace Cymbalists
         }
         private static void ReceiverMethod()
         {
-            var factory = new ConnectionFactory() {HostName = "localhost"};
+            var factory = new ConnectionFactory() {HostName = HostName };
             using (var connection = factory.CreateConnection())
             using (var channel = connection.CreateModel())
             {

@@ -4,18 +4,19 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Text;
+using Cymbalists.ActionController.States;
 using RabbitMQ.Client.Framing.Impl;
 
 namespace Cymbalists
 {
-    enum State
-    {
-        WRIds,
-        Eval,
-        WNWHId,
-        LWR,
-        WP
-    }
+    //enum State
+    //{
+    //    WRIds,
+    //    Eval,
+    //    WNWHId,
+    //    LWR,
+    //    WP
+    //}
 
     enum Message
     {
@@ -24,47 +25,39 @@ namespace Cymbalists
         Won,
         Finished
     }
-    internal class ControlUnit
+    public class ControlUnit
     {
         private const string ExchangeName = "cymbalists quarrel";
         internal readonly string RoutingName;
-        private readonly List<NeighbourData> _neighbours;
-        private readonly Dictionary<string, NeighbourData> _neighboursDict;
         private readonly IConnection _connection;
         private int Id;
-        private int ReceivedIdsCounter;
-        private int ReceivedReportsCounter;
-        private State state;
+        private readonly NeighboursManager _manager;
+        private ControlStateBase state;
 
 
-        public ControlUnit(IConnection connection, string routingName, int n)
+        public ControlUnit(IConnection connection, string routingName, NeighboursManager manager)
         {
             var factory = new ConnectionFactory(){ HostName = "localhost"};
             this._connection = factory.CreateConnection();
-            this._neighbours = new List<NeighbourData>();
             this.RoutingName = routingName;
-            this.ReceivedIdsCounter = 0;
-            this.ReceivedReportsCounter = 0;
-            this.state = State.WRIds;
-            var nd = (double) n;
-            this.Id = new Random().Next((int)(nd * nd * nd * nd));
+            ///
+            /// TODO: create state control machine and assign starting state
+            //this.state = new StartingState();
+            this._manager = manager;
+            this.Id = new Random().Next(int.MaxValue);
 
         }
 
-        public void AddNeighbour(string neighbourName)
-        {
-            var neighbour = new NeighbourData(neighbourName);
-            _neighbours.Add(neighbour);
-            _neighboursDict.Add(neighbourName, neighbour);
-        }
 
         public void Control()
         {
-            foreach (var neighbour in _neighbours)
+            foreach (var neighbour in _manager.GetAll())
                 ListenForMessages(neighbour);
             // create channels for every Neighbour data
             // attach method to message received
             // create your own sender channel 
+            ///
+            /// TODO: Move this to starting transition action
             SendYourId();
         }
 
@@ -106,72 +99,8 @@ namespace Cymbalists
 
         private void MakeNextMove(string message, string key)
         {
-            switch (state)
-            {
-                case State.WRIds:
-                    state = GatherIdMessages(message, key);
-                    break;
-                case State.Eval:
-                    state = Evaluate(message, key);
-                    break;
-                case State.WNWHId:
-                    state = HandleNeighbourReport(message, key);
-                    break;
-                case State.LWR:
-                    state = WaitForNextRound(message, key);
-                    break;
-                case State.WP:
-                    state = Play();
-                    break;
-            }
-        }
-
-        private State Play()
-        {
-            throw new NotImplementedException();
-        }
-
-        private State WaitForNextRound(string message, string senderRoutingName)
-        {
-            throw new NotImplementedException();
-        }
-
-        private State HandleNeighbourReport(string message, string senderRoutingName)
-        {
-            throw new NotImplementedException();
-        }
-
-        private State Evaluate(string message, string senderRoutingName)
-        {
-            throw new NotImplementedException();
-        }
-
-        private State GatherIdMessages(string message, string senderRoutingName)
-        {
-            State nextState = State.WRIds;
-            if (int.TryParse(message, out int id))
-            {
-                nextState = HandleId(id, senderRoutingName);
-            }
-            else
-            {
-                Enum.TryParse<Message>(message, out Message messageType);
-                switch (messageType)
-                {
-                    case Message.Lost:
-                        nextState = 
-                        break;
-                    case Message.Finished:
-                        break;
-                    case Message.Won:
-                        break;
-                }
-            }
-        }
-
-        private State HandleId(int id, string senderRoutingName)
-        {
-            throw new NotImplementedException();
+            _manager.UpdateNeighbourInfo(message, key);
+            state = state.TakeAction();
         }
     }
 }

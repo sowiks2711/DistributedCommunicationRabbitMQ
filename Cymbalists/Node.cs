@@ -1,13 +1,16 @@
-﻿namespace Cymbalists
+﻿using RabbitMQ.Client;
+
+namespace Cymbalists
 {
     public class Node
     {
-        public string RoutingName => _control.RoutingName;
-        public Node(int x, int y, int n = 0, RabbitMQ.Client.IConnection connection = null, string routingName = "")
+        public string RoutingName;
+        public Node(int x, int y, int n = 0, string routingName = "")
         {
             X = x;
             Y = y;
-            _control = new ControlUnit(connection, routingName, n);
+            _manager = new NeighboursManager();
+            RoutingName = routingName;
         }
 
         public int X { get; }
@@ -15,14 +18,14 @@
 
         public void AddNeighbour(string name)
         {
-            _control.AddNeighbour(name);
+            _manager.AddNeighbour(name);
         }
 
-        private readonly ControlUnit _control;
+        private readonly NeighboursManager _manager;
 
-        public void ControlMethod()
+        public ControlUnit CreateControlUnit(ConnectionFactory factory)
         {
-            _control.Control();
+            return new ControlUnit(factory.CreateConnection(), RoutingName, _manager);
         }
     }
 }

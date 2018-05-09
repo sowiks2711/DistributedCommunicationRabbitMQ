@@ -1,18 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
-namespace Cymbalists
+namespace Cymbalists.InitializationHelpers
 {
-    public class GraphBuilder
+    public class NodesConnector
     {
         private readonly List<Node> _nodes;
 
-        public GraphBuilder(List<Node> nodes)
+        public NodesConnector(List<Node> nodes)
         {
             this._nodes = nodes;
         }
 
-        public List<Node> Build()
+        public List<Node> Connect()
         {
             _nodes.Sort((s,p) =>
             {

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Cymbalists
+namespace Cymbalists.InitializationHelpers
 {
     public class NeighbourMatcher
     {
