@@ -1,16 +1,17 @@
-﻿using Cymbalists.ActionController.States;
+﻿using System;
+using Cymbalists.ActionController.States;
 
 namespace Cymbalists.ActionController.Transitions
 {
     internal class ListenForIdsCycleTransition : TransitionBase
     {
-        public ListenForIdsCycleTransition(NeighboursManager manager, ControlStateBase from) : base(manager, from)
+        public ListenForIdsCycleTransition(NeighboursManager manager) : base(manager)
         {
         }
 
         public override void TakeAction()
         {
-            throw new System.NotImplementedException();
+            throw new NotImplementedException();
         }
 
         public override bool ConditionSatisfied()

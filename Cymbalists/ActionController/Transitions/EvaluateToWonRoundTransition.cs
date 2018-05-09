@@ -1,6 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
 using Cymbalists.ActionController.States;
-using Cymbalists.ActionController.Transitions.TransitionDefinitions;
 
 namespace Cymbalists.ActionController.Transitions
 {
@@ -12,12 +11,12 @@ namespace Cymbalists.ActionController.Transitions
 
         public override void TakeAction()
         {
-            throw new System.NotImplementedException();
+            throw new NotImplementedException();
         }
 
         public override bool ConditionSatisfied()
         {
-            throw new System.NotImplementedException();
+            throw new NotImplementedException();
         }
 
         public override ControlStateBase GetTargetState()

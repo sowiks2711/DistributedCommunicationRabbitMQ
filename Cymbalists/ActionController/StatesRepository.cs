@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using Cymbalists.ActionController.States;
-using Cymbalists.ActionController.Transitions.TransitionDefinitions;
+using Cymbalists.ActionController.Transitions;
 
 namespace Cymbalists.ActionController
 {
@@ -9,34 +9,34 @@ namespace Cymbalists.ActionController
         public StatesRepository(NeighboursManager manager)
         {
             StartingState = new StartingState(
-                new List<TransitionDefinition>
+                new List<TransitionBase>
                 {
-                    new StartToListenForIdsDefinition(manager)
+                    new StartToListenForIdsTransition(manager)
                 });
-            WonRoundState = new WonRoundState(new List<TransitionDefinition>());
+            WonRoundState = new WonRoundState(new List<TransitionBase>());
             EvaluationState = new EvaluationState(
-                new List<TransitionDefinition>
+                new List<TransitionBase>
                 {
-                    new EvaluateToWaitForPrivilidgedResultDefinition(manager),
-                    new EvaluateToWonRoundDefinition(manager)
+                    new EvaluateToWaitForPrivilidgedResultTransition(manager),
+                    new EvaluateToWonRoundTransition(manager)
                 });
             WaitForPrivilidgedResultState = new WaitForPrivilidgedResultState(
-                new List<TransitionDefinition>
+                new List<TransitionBase>
                 {
-                    new WaitForPrivilidgedResultToEvaluateDefinition(manager),
-                    new WaitForPrivilidgedResultToWaitForRestResultDefinition(manager)
+                    new WaitForPrivilidgedResultToEvaluateTransition(manager),
+                    new WaitForPrivilidgedResultToWaitForRestResultTransition(manager)
                 });
             WaitForRestResultsState = new WaitForRestResultsState(
-                new List<TransitionDefinition>
+                new List<TransitionBase>
                 {
-                    new WaitForRestResultToEvaluateDefinition(manager),
-                    new WaitForRestResultCycleDefinition(manager)
+                    new WaitForRestResultToEvaluateTransition(manager),
+                    new WaitForRestResultCycleTransition(manager)
                 });
             ListenForIdsState = new ListenForIdsState(
-                new List<TransitionDefinition>
+                new List<TransitionBase>
                 {
-                    new ListenForIdsToEvaluateDefinition(manager),
-                    new ListenForIdsCycleDefinition(manager)
+                    new ListenForIdsToEvaluateTransition(manager),
+                    new ListenForIdsCycleTransition(manager)
                 });
 
 

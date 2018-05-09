@@ -1,7 +1,6 @@
 ﻿using System;
-using Cymbalists.ActionController.Transitions;
 using System.Collections.Generic;
-using Cymbalists.ActionController.Transitions.TransitionDefinitions;
+using Cymbalists.ActionController.Transitions;
 
 namespace Cymbalists.ActionController.States
 {
@@ -9,27 +8,21 @@ namespace Cymbalists.ActionController.States
     {
         private readonly List<TransitionBase> _transitions;
 
-        protected ControlStateBase(List<TransitionDefinition> transitionDefinitions)
+        protected ControlStateBase(List<TransitionBase> transitions)
         {
-            _transitions = new List<TransitionBase>();
-            foreach (var transitionDefinition in transitionDefinitions)
-            {
-                _transitions.Add(transitionDefinition.BuildTransition(this));
-            }
+            _transitions = transitions;
         }
 
         public ControlStateBase TakeAction()
         {
             foreach (var transition in _transitions)
-            {
                 if (transition.ConditionSatisfied())
                 {
                     transition.TakeAction();
                     return transition.GetTargetState();
                 }
-            }
+
             throw new InvalidOperationException();
         }
-
     }
 }

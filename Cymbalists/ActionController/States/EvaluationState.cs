@@ -1,11 +1,11 @@
 ﻿using System.Collections.Generic;
-using Cymbalists.ActionController.Transitions.TransitionDefinitions;
+using Cymbalists.ActionController.Transitions;
 
 namespace Cymbalists.ActionController.States
 {
     public class EvaluationState : ControlStateBase
     {
-        public EvaluationState(List<TransitionDefinition> transitionDefinitions) : base(transitionDefinitions)
+        public EvaluationState(List<TransitionBase> transitions) : base(transitions)
         {
         }
     }

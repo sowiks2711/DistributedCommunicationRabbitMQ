@@ -1,13 +1,11 @@
-﻿using System.Collections.Generic;
-using System.Runtime.InteropServices.WindowsRuntime;
+﻿using System;
 using Cymbalists.ActionController.States;
-using Cymbalists.ActionController.Transitions.TransitionDefinitions;
 
 namespace Cymbalists.ActionController.Transitions
 {
     public class StartToListenForIdsTransition : TransitionBase
     {
-        public StartToListenForIdsTransition(NeighboursManager manager, ControlStateBase from) : base(manager, from)
+        public StartToListenForIdsTransition(NeighboursManager manager) : base(manager)
         {
         }
 
@@ -17,7 +15,7 @@ namespace Cymbalists.ActionController.Transitions
             /// TODO: send your id to neighbours
             ///
             Manager.BroadcastId();
-            throw new System.NotImplementedException();
+            throw new NotImplementedException();
         }
 
         public override bool ConditionSatisfied()

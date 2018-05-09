@@ -1,11 +1,11 @@
 ﻿using System.Collections.Generic;
-using Cymbalists.ActionController.Transitions.TransitionDefinitions;
+using Cymbalists.ActionController.Transitions;
 
 namespace Cymbalists.ActionController.States
 {
     public class WaitForRestResultsState : ControlStateBase
     {
-        public WaitForRestResultsState(List<TransitionDefinition> transitionDefinitions) : base(transitionDefinitions)
+        public WaitForRestResultsState(List<TransitionBase> transitions) : base(transitions)
         {
         }
     }

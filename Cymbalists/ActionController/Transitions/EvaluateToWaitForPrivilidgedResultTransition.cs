@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using Cymbalists.ActionController.States;
-using Cymbalists.ActionController.Transitions.TransitionDefinitions;
+using Cymbalists.ActionController.Transitions;
 
 namespace Cymbalists.ActionController.Transitions
 {
