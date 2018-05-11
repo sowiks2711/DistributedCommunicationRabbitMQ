@@ -16,6 +16,7 @@ namespace Cymbalists
         internal const string HostName = "localhost";
         internal static readonly string PositionFilePath = "Resources/positions.txt";
         internal static readonly string QueueName = "Queueu";
+        public const string ExchangeName = "cymbalists quarrel";
         internal static readonly double HearingDistance = 3;
         public static void Main(string[] args)
         {
@@ -29,9 +30,9 @@ namespace Cymbalists
                     ///
                     /// TODO: create threads and pass them the appropriate objects method
                     ///
-                    /// var thread = new Thread(node.ControlMethod);
-                    /// thread.Start();
-                    /// threads.Add(thread);
+                    var thread = new Thread(controlUnit.Control);
+                    thread.Start();
+                    threads.Add(thread);
                 }
                 //var nodes = new NodesConnector(ReadCoordinates(connection) ).Connect();
             

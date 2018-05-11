@@ -27,32 +27,25 @@ namespace Cymbalists
     }
     public class ControlUnit
     {
-        private const string ExchangeName = "cymbalists quarrel";
-        internal readonly string RoutingName;
-        private readonly IConnection _connection;
         private int Id;
         private readonly NeighboursManager _manager;
         private ControlStateBase state;
+        private readonly ComunicationManager _communicationManager;
 
-
-        public ControlUnit(IConnection connection, string routingName, NeighboursManager manager)
+        public ControlUnit(string routingName, NeighboursManager manager)
         {
-            var factory = new ConnectionFactory(){ HostName = "localhost"};
-            this._connection = factory.CreateConnection();
-            this.RoutingName = routingName;
             ///
             /// TODO: create state control machine and assign starting state
             //this.state = new StartingState();
             this._manager = manager;
             this.Id = new Random().Next(int.MaxValue);
+            this._communicationManager = new Cymbalists.ComunicationManager(_manager, Id, routingName);
 
         }
 
 
         public void Control()
         {
-            foreach (var neighbour in _manager.GetAll())
-                ListenForMessages(neighbour);
             // create channels for every Neighbour data
             // attach method to message received
             // create your own sender channel 
@@ -61,41 +54,6 @@ namespace Cymbalists
             SendYourId();
         }
 
-        private void SendYourId()
-        {
-            var channel = _connection.CreateModel();
-                channel.ExchangeDeclare(exchange: ExchangeName,
-                    type: "direct");
-
-            var message = RoutingName;
-            var body = Encoding.UTF8.GetBytes(message);
-                channel.BasicPublish(exchange: ExchangeName,
-                    routingKey: RoutingName,
-                    basicProperties: null,
-                    body: body);
-            Console.WriteLine(" [x] Sent '{0}':'{1}'", ExchangeName, message);
-        }
-
-        private void ListenForMessages(NeighbourData neighbour)
-        {
-            var channel = _connection.CreateModel();
-            channel.ExchangeDeclare(exchange: ExchangeName, type: "direct");
-            var queueName = channel.QueueDeclare().QueueName;
-            channel.QueueBind(queue: queueName, exchange: ExchangeName, routingKey: neighbour.Name);
-            var consumer = new EventingBasicConsumer(channel);
-            consumer.Received += (model, ea) =>
-            {
-                var body = ea.Body;
-                var message = Encoding.UTF8.GetString(body);
-                MakeNextMove(message, ea.RoutingKey);
-
-                Console.WriteLine(" [x] Received {0}", message);
-            };
-
-            channel.BasicConsume(queue: queueName,
-                autoAck: true,
-                consumer: consumer);
-        }
 
         private void MakeNextMove(string message, string key)
         {
