@@ -5,18 +5,18 @@ namespace Cymbalists.ActionController.Transitions
 {
     public class WaitForRestResultToEvaluateTransition : TransitionBase
     {
-        public WaitForRestResultToEvaluateTransition(NeighboursManager manager) : base(manager)
+        public WaitForRestResultToEvaluateTransition(NeighboursManager manager, ComunicationManager communicationManager, StatesRepository repo) : base(manager, communicationManager, repo)
         {
         }
 
         public override void TakeAction()
         {
-            throw new NotImplementedException();
+            Manager.InitializeNextRound();
         }
 
         public override bool ConditionSatisfied()
         {
-            throw new NotImplementedException();
+            return Manager.ReadyForNextRound();
         }
 
         public override ControlStateBase GetTargetState()

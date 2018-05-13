@@ -5,18 +5,17 @@ namespace Cymbalists.ActionController.Transitions
 {
     internal class ListenForIdsToEvaluateTransition : TransitionBase
     {
-        public ListenForIdsToEvaluateTransition(NeighboursManager manager) : base(manager)
+        public ListenForIdsToEvaluateTransition(NeighboursManager manager, ComunicationManager communicationManager, StatesRepository repo) : base(manager, communicationManager, repo)
         {
         }
 
         public override void TakeAction()
         {
-            throw new NotImplementedException();
         }
 
         public override bool ConditionSatisfied()
         {
-            throw new NotImplementedException();
+            return Manager.ReceivedAllIds();
         }
 
         public override ControlStateBase GetTargetState()

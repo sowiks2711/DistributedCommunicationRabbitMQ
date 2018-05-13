@@ -18,22 +18,31 @@ namespace Cymbalists
         internal static readonly string QueueName = "Queueu";
         public const string ExchangeName = "cymbalists quarrel";
         internal static readonly double HearingDistance = 3;
+        public static readonly int PlayingDuration = 100;
+        public static readonly Logger logger = new Logger();
+
         public static void Main(string[] args)
         {
-            var factory = new ConnectionFactory(){ HostName = HostName };
             var threads = new List<Thread>();
             
-                var nodes = new NodesConnector(new NodesFactory().Create() ).Connect();
-                foreach (var node in nodes)
-                {
-                    var controlUnit = node.CreateControlUnit(factory);
-                    ///
-                    /// TODO: create threads and pass them the appropriate objects method
-                    ///
-                    var thread = new Thread(controlUnit.Control);
-                    thread.Start();
-                    threads.Add(thread);
-                }
+            var nodes = new NodesConnector(new NodesFactory().Create() ).Connect();
+            var units = new List<ControlUnit>();
+            foreach (var node in nodes)
+            {
+                var controlUnit = node.CreateControlUnit();
+                controlUnit.InitializeListening();
+                units.Add(controlUnit);
+            }
+
+            foreach (var unit in units)
+            {
+                ///
+                /// TODO: create threads and pass them the appropriate objects method
+                ///
+                var thread = new Thread(unit.Control);
+                thread.Start();
+                threads.Add(thread);
+            }
                 //var nodes = new NodesConnector(ReadCoordinates(connection) ).Connect();
             
 

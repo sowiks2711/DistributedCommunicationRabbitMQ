@@ -23,9 +23,9 @@ namespace Cymbalists
 
         private readonly NeighboursManager _manager;
 
-        public ControlUnit CreateControlUnit(ConnectionFactory factory)
+        public ControlUnit CreateControlUnit()
         {
-            return new ControlUnit(factory.CreateConnection(), RoutingName, _manager);
+            return new ControlUnit( RoutingName, _manager);
         }
     }
 }

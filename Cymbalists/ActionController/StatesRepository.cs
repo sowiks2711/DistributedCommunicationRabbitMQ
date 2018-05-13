@@ -6,40 +6,39 @@ namespace Cymbalists.ActionController
 {
     public class StatesRepository
     {
-        public StatesRepository(NeighboursManager manager)
+        public StatesRepository(NeighboursManager manager, ComunicationManager communicationManager, System.Threading.SemaphoreSlim _gate)
         {
             StartingState = new StartingState(
                 new List<TransitionBase>
                 {
-                    new StartToListenForIdsTransition(manager)
+                    new StartToListenForIdsTransition(manager, communicationManager, this)
                 });
-            WonRoundState = new WonRoundState(new List<TransitionBase>());
+            WonRoundState = new WonRoundState(transitions: new List<TransitionBase>{new WonRoundToFinishedTransition(manager, communicationManager, this, _gate), new FinishedCycleTransition(this)});
             EvaluationState = new EvaluationState(
                 new List<TransitionBase>
                 {
-                    new EvaluateToWaitForPrivilidgedResultTransition(manager),
-                    new EvaluateToWonRoundTransition(manager)
+                    new EvaluateToWaitForPrivilidgedResultTransition(manager, communicationManager, this),
+                    new EvaluateToWonRoundTransition(manager, communicationManager, this)
                 });
             WaitForPrivilidgedResultState = new WaitForPrivilidgedResultState(
                 new List<TransitionBase>
                 {
-                    new WaitForPrivilidgedResultToEvaluateTransition(manager),
-                    new WaitForPrivilidgedResultToWaitForRestResultTransition(manager)
+                    new WaitForPrivilidgedResultToEvaluateTransition(manager, communicationManager, this),
+                    new WaitForPrivilidgedResultToWaitForRestResultTransition(manager, communicationManager, this),
+                    new WaitForPrivilidgedResultCycleTransition(manager, communicationManager, this)
                 });
             WaitForRestResultsState = new WaitForRestResultsState(
                 new List<TransitionBase>
                 {
-                    new WaitForRestResultToEvaluateTransition(manager),
-                    new WaitForRestResultCycleTransition(manager)
+                    new WaitForRestResultToEvaluateTransition(manager, communicationManager, this),
+                    new WaitForRestResultCycleTransition(manager, communicationManager, this)
                 });
             ListenForIdsState = new ListenForIdsState(
                 new List<TransitionBase>
                 {
-                    new ListenForIdsToEvaluateTransition(manager),
-                    new ListenForIdsCycleTransition(manager)
+                    new ListenForIdsToEvaluateTransition(manager, communicationManager, this),
+                    new ListenForIdsCycleTransition(manager, communicationManager, this)
                 });
-
-
         }
 
         public ControlStateBase StartingState {get;}

@@ -18,6 +18,7 @@ namespace Cymbalists.ActionController.States
             foreach (var transition in _transitions)
                 if (transition.ConditionSatisfied())
                 {
+                    transition.LogTransition();
                     transition.TakeAction();
                     return transition.GetTargetState();
                 }

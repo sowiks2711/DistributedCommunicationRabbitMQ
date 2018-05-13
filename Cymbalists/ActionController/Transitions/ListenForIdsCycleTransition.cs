@@ -5,13 +5,12 @@ namespace Cymbalists.ActionController.Transitions
 {
     internal class ListenForIdsCycleTransition : TransitionBase
     {
-        public ListenForIdsCycleTransition(NeighboursManager manager) : base(manager)
+        public ListenForIdsCycleTransition(NeighboursManager manager, ComunicationManager communicationManager, StatesRepository repo) : base(manager, communicationManager, repo)
         {
         }
 
         public override void TakeAction()
         {
-            throw new NotImplementedException();
         }
 
         public override bool ConditionSatisfied()

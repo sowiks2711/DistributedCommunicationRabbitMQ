@@ -5,18 +5,18 @@ namespace Cymbalists.ActionController.Transitions
 {
     public class WaitForPrivilidgedResultToWaitForRestResultTransition : TransitionBase
     {
-        public WaitForPrivilidgedResultToWaitForRestResultTransition(NeighboursManager manager) : base(manager)
+        public WaitForPrivilidgedResultToWaitForRestResultTransition(NeighboursManager manager, ComunicationManager communicationManager, StatesRepository repo) : base(manager, communicationManager, repo)
         {
         }
 
         public override void TakeAction()
         {
-            throw new NotImplementedException();
+            CommunicationManager.SendLost();
         }
 
         public override bool ConditionSatisfied()
         {
-            throw new NotImplementedException();
+            return Manager.HasNeighbourWon();
         }
 
         public override ControlStateBase GetTargetState()

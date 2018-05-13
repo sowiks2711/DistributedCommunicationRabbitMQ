@@ -5,17 +5,13 @@ namespace Cymbalists.ActionController.Transitions
 {
     public class StartToListenForIdsTransition : TransitionBase
     {
-        public StartToListenForIdsTransition(NeighboursManager manager) : base(manager)
+        public StartToListenForIdsTransition(NeighboursManager manager, ComunicationManager communicationManager, StatesRepository repo) : base(manager, communicationManager, repo)
         {
         }
 
         public override void TakeAction()
         {
-            ///
-            /// TODO: send your id to neighbours
-            ///
-            Manager.BroadcastId();
-            throw new NotImplementedException();
+            CommunicationManager.SendId();
         }
 
         public override bool ConditionSatisfied()

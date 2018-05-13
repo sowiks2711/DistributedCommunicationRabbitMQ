@@ -5,18 +5,18 @@ namespace Cymbalists.ActionController.Transitions
 {
     public class EvaluateToWonRoundTransition : TransitionBase
     {
-        public EvaluateToWonRoundTransition(NeighboursManager manager) : base(manager)
+        public EvaluateToWonRoundTransition(NeighboursManager manager, ComunicationManager communicationManager, StatesRepository repo) : base(manager, communicationManager, repo)
         {
         }
 
         public override void TakeAction()
         {
-            throw new NotImplementedException();
+            CommunicationManager.SendWon();
         }
 
         public override bool ConditionSatisfied()
         {
-            throw new NotImplementedException();
+            return Manager.HasWonRound(CommunicationManager.Id);
         }
 
         public override ControlStateBase GetTargetState()
