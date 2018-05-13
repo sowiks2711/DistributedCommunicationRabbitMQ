@@ -21,7 +21,7 @@ namespace Cymbalists.ActionController.Transitions
 
         public override ControlStateBase GetTargetState()
         {
-            return StatesRepo.WonRoundState;
+            return StatesRepo.WonRoundState.TakeAction();
         }
     }
 }
