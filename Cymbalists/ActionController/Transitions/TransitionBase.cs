@@ -23,7 +23,7 @@ namespace Cymbalists.ActionController.Transitions
 
         public void LogTransition()
         {
-            Program.logger.LoggTransition(CommunicationManager.Id, this.GetType().Name);
+            Program.Logger.LoggTransition(CommunicationManager.Id, this.GetType().Name);
         }
     }
 }

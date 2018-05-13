@@ -86,7 +86,7 @@ namespace Cymbalists
                 }
                 var body = ea.Body;
                 var message = Encoding.UTF8.GetString(body);
-                Program.logger.LoggMessageReceived(Id, message);
+                Program.Logger.LoggMessageReceived(Id, message);
                 _negotiationController.MakeNextMove(message, ea.RoutingKey);
 
             };
@@ -100,7 +100,7 @@ namespace Cymbalists
         private void SendMessage(string message)
         {
             var body = Encoding.UTF8.GetBytes(message);
-            Program.logger.LoggMessageSent(Id, message);
+            Program.Logger.LoggMessageSent(Id, message);
             _channel.BasicPublish(exchange: Program.ExchangeName,
                 routingKey: _routingName,
                 basicProperties: null,
