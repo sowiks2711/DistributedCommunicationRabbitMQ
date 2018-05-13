@@ -1,11 +1,11 @@
-﻿using System;
-using Cymbalists.ActionController.States;
+﻿using Cymbalists.ActionController.States;
 
 namespace Cymbalists.ActionController.Transitions
 {
     internal class ListenForIdsCycleTransition : TransitionBase
     {
-        public ListenForIdsCycleTransition(NeighboursManager manager, ComunicationManager communicationManager, StatesRepository repo) : base(manager, communicationManager, repo)
+        public ListenForIdsCycleTransition(NeighboursManager manager, ComunicationManager communicationManager,
+            StatesRepository repo) : base(manager, communicationManager, repo)
         {
         }
 

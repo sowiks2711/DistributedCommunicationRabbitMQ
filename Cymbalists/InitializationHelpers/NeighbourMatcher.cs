@@ -10,13 +10,13 @@ namespace Cymbalists.InitializationHelpers
         {
             _that = that;
         }
-        public bool LowerBreakCondition( Node other)
+
+        public bool LowerBreakCondition(Node other)
         {
             var noMoreNeighboursBelow = _that.X - other.X > Program.HearingDistance;
             return noMoreNeighboursBelow;
-
-
         }
+
         public bool HigherBreakCondition(Node other)
         {
             var noMoreNeighboursAbove = other.X - _that.X > Program.HearingDistance;
@@ -32,6 +32,5 @@ namespace Cymbalists.InitializationHelpers
                 isNeighbour = true;
             return isNeighbour;
         }
-
     }
 }

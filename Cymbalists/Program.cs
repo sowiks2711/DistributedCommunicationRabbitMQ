@@ -1,16 +1,22 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Globalization;
-using System.IO;
-using System.Net;
-using System.Text;
+﻿using System.Collections.Generic;
 using System.Threading;
 using Cymbalists.InitializationHelpers;
-using RabbitMQ.Client;
-using RabbitMQ.Client.Events;
 
 namespace Cymbalists
 {
+    internal enum Message
+    {
+        Id,
+        Lost,
+        Won,
+        Finished
+    }
+
+    /// <summary>
+    ///     Communication protocol uses four types of messages. Cymbalist's
+    ///     behaviour depends on his state. States are drawn in /Resources/CymbalistStates.pdf.
+    ///     Some transitions between states involve sending messages to neighbours.
+    /// </summary>
     internal class Program
     {
         public static readonly string HostName = "localhost";

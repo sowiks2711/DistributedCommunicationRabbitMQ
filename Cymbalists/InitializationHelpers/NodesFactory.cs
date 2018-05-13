@@ -1,16 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.IO;
-using RabbitMQ.Client;
 
 namespace Cymbalists.InitializationHelpers
 {
     internal class NodesFactory
     {
-
-        public NodesFactory()
-        {
-        }
-
         public List<Node> Create()
         {
             var nodes = new List<Node>();

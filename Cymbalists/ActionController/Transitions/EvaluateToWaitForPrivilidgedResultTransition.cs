@@ -1,12 +1,11 @@
-﻿using System.Collections.Generic;
-using Cymbalists.ActionController.States;
-using Cymbalists.ActionController.Transitions;
+﻿using Cymbalists.ActionController.States;
 
 namespace Cymbalists.ActionController.Transitions
 {
     public class EvaluateToWaitForPrivilidgedResultTransition : TransitionBase
     {
-        public EvaluateToWaitForPrivilidgedResultTransition(NeighboursManager manager, ComunicationManager communicationManager, StatesRepository repo) : base(manager, communicationManager, repo)
+        public EvaluateToWaitForPrivilidgedResultTransition(NeighboursManager manager,
+            ComunicationManager communicationManager, StatesRepository repo) : base(manager, communicationManager, repo)
         {
         }
 

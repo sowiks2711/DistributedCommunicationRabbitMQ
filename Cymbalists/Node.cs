@@ -1,10 +1,10 @@
-﻿using RabbitMQ.Client;
-
-namespace Cymbalists
+﻿namespace Cymbalists
 {
     public class Node
     {
+        private readonly NeighboursManager _manager;
         public string RoutingName;
+
         public Node(int x, int y, int n = 0, string routingName = "")
         {
             X = x;
@@ -21,11 +21,9 @@ namespace Cymbalists
             _manager.AddNeighbour(name);
         }
 
-        private readonly NeighboursManager _manager;
-
         public ControlUnit CreateControlUnit()
         {
-            return new ControlUnit( RoutingName, _manager);
+            return new ControlUnit(RoutingName, _manager);
         }
     }
 }

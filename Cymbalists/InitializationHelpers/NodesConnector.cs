@@ -8,12 +8,12 @@ namespace Cymbalists.InitializationHelpers
 
         public NodesConnector(List<Node> nodes)
         {
-            this._nodes = nodes;
+            _nodes = nodes;
         }
 
         public List<Node> Connect()
         {
-            _nodes.Sort((s,p) =>
+            _nodes.Sort((s, p) =>
             {
                 var result = s.X.CompareTo(p.X);
                 if (result == 0)
@@ -40,12 +40,10 @@ namespace Cymbalists.InitializationHelpers
                         break;
                     if (matcher.NeighbouringCondition(_nodes[j]))
                         node.AddNeighbour(_nodes[j].RoutingName);
-
                 }
             }
+
             return _nodes;
         }
-
-
     }
 }

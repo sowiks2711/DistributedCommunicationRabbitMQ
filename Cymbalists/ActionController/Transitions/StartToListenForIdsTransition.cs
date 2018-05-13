@@ -1,11 +1,11 @@
-﻿using System;
-using Cymbalists.ActionController.States;
+﻿using Cymbalists.ActionController.States;
 
 namespace Cymbalists.ActionController.Transitions
 {
     public class StartToListenForIdsTransition : TransitionBase
     {
-        public StartToListenForIdsTransition(NeighboursManager manager, ComunicationManager communicationManager, StatesRepository repo) : base(manager, communicationManager, repo)
+        public StartToListenForIdsTransition(NeighboursManager manager, ComunicationManager communicationManager,
+            StatesRepository repo) : base(manager, communicationManager, repo)
         {
         }
 
